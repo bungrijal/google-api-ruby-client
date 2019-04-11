@@ -39,7 +39,7 @@ module Google
       # user who manages locations for your business, you can use your personal
       # Google Account. To share management of locations with multiple users,
       # [create a business account]
-      # (https://support.google.com/business/answer/6085339?hl=en&ref_topic=6085325).
+      # (https://support.google.com/business/answer/6085339?ref_topic=6085325).
       class Account
         include Google::Apis::Core::Hashable
       
@@ -259,6 +259,57 @@ module Google
         end
       end
       
+      # Represents an answer to a question
+      class Answer
+        include Google::Apis::Core::Hashable
+      
+        # Represents the author of a question or answer
+        # Corresponds to the JSON property `author`
+        # @return [Google::Apis::MybusinessV4::Author]
+        attr_accessor :author
+      
+        # Output only. The timestamp for when the answer was written.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. The unique name for the answer
+        # accounts/*/locations/*/questions/*/answers/*
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # The text of the answer. It should contain at least one non-whitespace
+        # character. The maximum length is 4096 characters.
+        # Corresponds to the JSON property `text`
+        # @return [String]
+        attr_accessor :text
+      
+        # Output only. The timestamp for when the answer was last modified.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        # Output only. The number of upvotes for the answer.
+        # Corresponds to the JSON property `upvoteCount`
+        # @return [Fixnum]
+        attr_accessor :upvote_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @author = args[:author] if args.key?(:author)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @name = args[:name] if args.key?(:name)
+          @text = args[:text] if args.key?(:text)
+          @update_time = args[:update_time] if args.key?(:update_time)
+          @upvote_count = args[:upvote_count] if args.key?(:upvote_count)
+        end
+      end
+      
       # Request message for MyBusiness.AssociateLocationRequest.
       class AssociateLocationRequest
         include Google::Apis::Core::Hashable
@@ -281,8 +332,7 @@ module Google
       # A location attribute. Attributes provide additional information about a
       # location. The attributes that can be set on a location may vary based on
       # the properties of that location (for example, category). Available attributes
-      # are
-      # determined by Google and may be added and removed without API changes.
+      # are determined by Google and may be added and removed without API changes.
       class Attribute
         include Google::Apis::Core::Hashable
       
@@ -312,9 +362,9 @@ module Google
         attr_accessor :value_type
       
         # The values for this attribute. The type of the values supplied must match
-        # that expected for that attribute; see [AttributeValueType](/my-business/
-        # reference/rest/v4/AttributeValueType). This is a
-        # repeated field where multiple attribute values may be provided.
+        # that expected for that attribute; see
+        # [AttributeValueType](/my-business/reference/rest/v4/AttributeValueType).
+        # This is a repeated field where multiple attribute values may be provided.
         # Attribute types only support one value.
         # Corresponds to the JSON property `values`
         # @return [Array<Object>]
@@ -360,9 +410,9 @@ module Google
         attr_accessor :group_display_name
       
         # If true, the attribute is deprecated and should no longer be used. If
-        # deprecated, updating this attribute will not result in an error, but updates
-        # will not be saved. At some point after being deprecated, the attribute will
-        # be removed entirely and it will become an error.
+        # deprecated, updating this attribute will not result in an error, but
+        # updates will not be saved. At some point after being deprecated, the
+        # attribute will be removed entirely and it will become an error.
         # Corresponds to the JSON property `isDeprecated`
         # @return [Boolean]
         attr_accessor :is_deprecated
@@ -375,9 +425,8 @@ module Google
         attr_accessor :is_repeatable
         alias_method :is_repeatable?, :is_repeatable
       
-        # For some types of attributes (for example, enums), a list of supported values
-        # and
-        # corresponding display names for those values is provided.
+        # For some types of attributes (for example, enums), a list of supported
+        # values and corresponding display names for those values is provided.
         # Corresponds to the JSON property `valueMetadata`
         # @return [Array<Google::Apis::MybusinessV4::AttributeValueMetadata>]
         attr_accessor :value_metadata
@@ -472,6 +521,37 @@ module Google
         end
       end
       
+      # Represents the author of a question or answer
+      class Author
+        include Google::Apis::Core::Hashable
+      
+        # The display name of the user
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # The profile photo URL of the user.
+        # Corresponds to the JSON property `profilePhotoUrl`
+        # @return [String]
+        attr_accessor :profile_photo_url
+      
+        # The type of user the author is.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @profile_photo_url = args[:profile_photo_url] if args.key?(:profile_photo_url)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
       # A request for basic metric insights.
       class BasicMetricsRequest
         include Google::Apis::Core::Hashable
@@ -534,6 +614,79 @@ module Google
         # Update properties of this object
         def update!(**args)
           @locations = args[:locations] if args.key?(:locations)
+        end
+      end
+      
+      # Request message for MyBusiness.BatchGetReviews.
+      class BatchGetReviewsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Whether to ignore rating-only reviews.
+        # Corresponds to the JSON property `ignoreRatingOnlyReviews`
+        # @return [Boolean]
+        attr_accessor :ignore_rating_only_reviews
+        alias_method :ignore_rating_only_reviews?, :ignore_rating_only_reviews
+      
+        # A collection of locations to fetch reviews for, specified by their names.
+        # Corresponds to the JSON property `locationNames`
+        # @return [Array<String>]
+        attr_accessor :location_names
+      
+        # Optional. Specifies the field to sort reviews by. Valid order to sort by
+        # are "rating" and "update_time". Results will always be in descending order.
+        # Corresponds to the JSON property `orderBy`
+        # @return [String]
+        attr_accessor :order_by
+      
+        # How many reviews to fetch per page. The default value is 200.
+        # Corresponds to the JSON property `pageSize`
+        # @return [Fixnum]
+        attr_accessor :page_size
+      
+        # If specified, it fetches the next page of reviews.
+        # Corresponds to the JSON property `pageToken`
+        # @return [String]
+        attr_accessor :page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @ignore_rating_only_reviews = args[:ignore_rating_only_reviews] if args.key?(:ignore_rating_only_reviews)
+          @location_names = args[:location_names] if args.key?(:location_names)
+          @order_by = args[:order_by] if args.key?(:order_by)
+          @page_size = args[:page_size] if args.key?(:page_size)
+          @page_token = args[:page_token] if args.key?(:page_token)
+        end
+      end
+      
+      # Response message for MyBusiness.BatchGetReviews.
+      class BatchGetReviewsResponse
+        include Google::Apis::Core::Hashable
+      
+        # Reviews with location information.
+        # Corresponds to the JSON property `locationReviews`
+        # @return [Array<Google::Apis::MybusinessV4::LocationReview>]
+        attr_accessor :location_reviews
+      
+        # If the number of reviews exceeded the requested page size, this field
+        # is populated with a token to fetch the next page of reviews on a subsequent
+        # calls. If there are no more reviews, this field will not be present in the
+        # response.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @location_reviews = args[:location_reviews] if args.key?(:location_reviews)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
         end
       end
       
@@ -748,24 +901,26 @@ module Google
         end
       end
       
-      # Represents a whole calendar date, e.g. date of birth. The time of day and
-      # time zone are either specified elsewhere or are not significant. The date
-      # is relative to the Proleptic Gregorian Calendar. The day may be 0 to
-      # represent a year and month where the day is not significant, e.g. credit card
-      # expiration date. The year may be 0 to represent a month and day independent
-      # of year, e.g. anniversary date. Related types are google.type.TimeOfDay
-      # and `google.protobuf.Timestamp`.
+      # Represents a whole or partial calendar date, e.g. a birthday. The time of day
+      # and time zone are either specified elsewhere or are not significant. The date
+      # is relative to the Proleptic Gregorian Calendar. This can represent:
+      # * A full date, with non-zero year, month and day values
+      # * A month and day value, with a zero year, e.g. an anniversary
+      # * A year on its own, with zero month and day values
+      # * A year and month value, with a zero day, e.g. a credit card expiration date
+      # Related types are google.type.TimeOfDay and `google.protobuf.Timestamp`.
       class Date
         include Google::Apis::Core::Hashable
       
         # Day of month. Must be from 1 to 31 and valid for the year and month, or 0
-        # if specifying a year/month where the day is not significant.
+        # if specifying a year by itself or a year and month where the day is not
+        # significant.
         # Corresponds to the JSON property `day`
         # @return [Fixnum]
         attr_accessor :day
       
-        # Month of year. Must be from 1 to 12, or 0 if specifying a date without a
-        # month.
+        # Month of year. Must be from 1 to 12, or 0 if specifying a year without a
+        # month and day.
         # Corresponds to the JSON property `month`
         # @return [Fixnum]
         attr_accessor :month
@@ -1094,7 +1249,7 @@ module Google
         end
       end
       
-      # Request message for MyBusiness.GenerateAccountNumber.
+      # Request message for Accounts.GenerateAccountNumber.
       class GenerateAccountNumberRequest
         include Google::Apis::Core::Hashable
       
@@ -1124,7 +1279,7 @@ module Google
         attr_accessor :location
       
         # Resource name of this GoogleLocation, in the format
-        # `googleLocation/`googleLocationId``.
+        # `googleLocations/`googleLocationId``.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -1196,7 +1351,7 @@ module Google
         # user who manages locations for your business, you can use your personal
         # Google Account. To share management of locations with multiple users,
         # [create a business account]
-        # (https://support.google.com/business/answer/6085339?hl=en&ref_topic=6085325).
+        # (https://support.google.com/business/answer/6085339?ref_topic=6085325).
         # Corresponds to the JSON property `targetAccount`
         # @return [Google::Apis::MybusinessV4::Account]
         attr_accessor :target_account
@@ -1334,7 +1489,7 @@ module Google
         end
       end
       
-      # Response message for MyBusiness.ListAccounts.
+      # Response message for Accounts.ListAccounts.
       class ListAccountsResponse
         include Google::Apis::Core::Hashable
       
@@ -1361,6 +1516,40 @@ module Google
         def update!(**args)
           @accounts = args[:accounts] if args.key?(:accounts)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # Response message for QuestionsAndAnswers.ListAnswers
+      class ListAnswersResponse
+        include Google::Apis::Core::Hashable
+      
+        # The requested answers.
+        # Corresponds to the JSON property `answers`
+        # @return [Array<Google::Apis::MybusinessV4::Answer>]
+        attr_accessor :answers
+      
+        # If the number of answers exceeds the requested max page size, this field
+        # is populated with a token to fetch the next page of answers on a subsequent
+        # call. If there are no more answers, this field is not present in the
+        # response.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The total number of answers posted for this question across all pages.
+        # Corresponds to the JSON property `totalSize`
+        # @return [Fixnum]
+        attr_accessor :total_size
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @answers = args[:answers] if args.key?(:answers)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @total_size = args[:total_size] if args.key?(:total_size)
         end
       end
       
@@ -1425,7 +1614,7 @@ module Google
         end
       end
       
-      # Response message for MyBusiness.ListCustomerMediaItems.
+      # Response message for Media.ListCustomerMediaItems.
       class ListCustomerMediaItemsResponse
         include Google::Apis::Core::Hashable
       
@@ -1560,7 +1749,7 @@ module Google
         end
       end
       
-      # Response message for MyBusiness.ListMediaItems.
+      # Response message for Media.ListMediaItems.
       class ListMediaItemsResponse
         include Google::Apis::Core::Hashable
       
@@ -1591,6 +1780,81 @@ module Google
           @media_items = args[:media_items] if args.key?(:media_items)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @total_media_item_count = args[:total_media_item_count] if args.key?(:total_media_item_count)
+        end
+      end
+      
+      # Response message for QuestionsAndAnswers.ListQuestions
+      class ListQuestionsResponse
+        include Google::Apis::Core::Hashable
+      
+        # If the number of questions exceeds the requested max page size, this field
+        # is populated with a token to fetch the next page of questions on a
+        # subsequent call. If there are no more questions, this field is not present
+        # in the response.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The requested questions,
+        # Corresponds to the JSON property `questions`
+        # @return [Array<Google::Apis::MybusinessV4::Question>]
+        attr_accessor :questions
+      
+        # The total number of questions posted for this location across all pages.
+        # Corresponds to the JSON property `totalSize`
+        # @return [Fixnum]
+        attr_accessor :total_size
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @questions = args[:questions] if args.key?(:questions)
+          @total_size = args[:total_size] if args.key?(:total_size)
+        end
+      end
+      
+      # Response message for GoogleLocations.ListRecommendedGoogleLocations.
+      # It also contains some locations that have been claimed by other GMB users
+      # since the last time they were recommended to this GMB account.
+      class ListRecommendedGoogleLocationsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The locations recommended to a GMB account.
+        # Each of these represents a GoogleLocation that
+        # is present on Maps.
+        # The locations are sorted in decreasing order of relevance to the GMB
+        # account.
+        # Corresponds to the JSON property `googleLocations`
+        # @return [Array<Google::Apis::MybusinessV4::GoogleLocation>]
+        attr_accessor :google_locations
+      
+        # During pagination, if there are more locations available to be fetched in
+        # the next page, this field is populated with a token to fetch the next page
+        # of locations in a subsequent call. If there are no more locations to be
+        # fetched, this field is not present in the response.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The total number of recommended locations for this GMB account,
+        # irrespective of pagination.
+        # Corresponds to the JSON property `totalSize`
+        # @return [Fixnum]
+        attr_accessor :total_size
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @google_locations = args[:google_locations] if args.key?(:google_locations)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @total_size = args[:total_size] if args.key?(:total_size)
         end
       end
       
@@ -2042,8 +2306,8 @@ module Google
         attr_accessor :store_code
       
         # A URL for this business. If possible, use a URL that represents this
-        # individual business location instead of a generic website/URL that represents
-        # all locations, or the brand.
+        # individual business location instead of a generic website/URL that
+        # represents all locations, or the brand.
         # Corresponds to the JSON property `websiteUrl`
         # @return [String]
         attr_accessor :website_url
@@ -2219,6 +2483,31 @@ module Google
           @location_name = args[:location_name] if args.key?(:location_name)
           @metric_values = args[:metric_values] if args.key?(:metric_values)
           @time_zone = args[:time_zone] if args.key?(:time_zone)
+        end
+      end
+      
+      # Represents a review with location information.
+      class LocationReview
+        include Google::Apis::Core::Hashable
+      
+        # Location resource name.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Output only. Represents a review for a location.
+        # Corresponds to the JSON property `review`
+        # @return [Google::Apis::MybusinessV4::Review]
+        attr_accessor :review
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @name = args[:name] if args.key?(:name)
+          @review = args[:review] if args.key?(:review)
         end
       end
       
@@ -2413,6 +2702,13 @@ module Google
         # @return [Google::Apis::MybusinessV4::MediaItemDataRef]
         attr_accessor :data_ref
       
+        # Description for this media item. Descriptions cannot be modified through
+        # the My Business API, but can be set when creating a new media item that is
+        # not a cover photo.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
         # Dimensions of the media item.
         # Corresponds to the JSON property `dimensions`
         # @return [Google::Apis::MybusinessV4::Dimensions]
@@ -2473,6 +2769,7 @@ module Google
           @attribution = args[:attribution] if args.key?(:attribution)
           @create_time = args[:create_time] if args.key?(:create_time)
           @data_ref = args[:data_ref] if args.key?(:data_ref)
+          @description = args[:description] if args.key?(:description)
           @dimensions = args[:dimensions] if args.key?(:dimensions)
           @google_url = args[:google_url] if args.key?(:google_url)
           @insights = args[:insights] if args.key?(:insights)
@@ -2690,13 +2987,14 @@ module Google
         attr_accessor :can_reopen
         alias_method :can_reopen?, :can_reopen
       
-        # Represents a whole calendar date, e.g. date of birth. The time of day and
-        # time zone are either specified elsewhere or are not significant. The date
-        # is relative to the Proleptic Gregorian Calendar. The day may be 0 to
-        # represent a year and month where the day is not significant, e.g. credit card
-        # expiration date. The year may be 0 to represent a month and day independent
-        # of year, e.g. anniversary date. Related types are google.type.TimeOfDay
-        # and `google.protobuf.Timestamp`.
+        # Represents a whole or partial calendar date, e.g. a birthday. The time of day
+        # and time zone are either specified elsewhere or are not significant. The date
+        # is relative to the Proleptic Gregorian Calendar. This can represent:
+        # * A full date, with non-zero year, month and day values
+        # * A month and day value, with a zero year, e.g. an anniversary
+        # * A year on its own, with zero month and day values
+        # * A year and month value, with a zero day, e.g. a credit card expiration date
+        # Related types are google.type.TimeOfDay and `google.protobuf.Timestamp`.
         # Corresponds to the JSON property `openingDate`
         # @return [Google::Apis::MybusinessV4::Date]
         attr_accessor :opening_date
@@ -3082,6 +3380,72 @@ module Google
         end
       end
       
+      # Represents a single question and some of its answers.
+      class Question
+        include Google::Apis::Core::Hashable
+      
+        # Represents the author of a question or answer
+        # Corresponds to the JSON property `author`
+        # @return [Google::Apis::MybusinessV4::Author]
+        attr_accessor :author
+      
+        # Output only. The timestamp for when the question was written.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. The unique name for the question.
+        # accounts/*/locations/*/questions/*
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # The text of the question. It should contain at least two words and the
+        # total length should be greater than or equal to 10 characters. The maximum
+        # length is 4096 characters.
+        # Corresponds to the JSON property `text`
+        # @return [String]
+        attr_accessor :text
+      
+        # Output only. A list of answers to the question, sorted by upvotes. This
+        # may not be a complete list of answers depending on the request parameters
+        # (answers_per_question)
+        # Corresponds to the JSON property `topAnswers`
+        # @return [Array<Google::Apis::MybusinessV4::Answer>]
+        attr_accessor :top_answers
+      
+        # Output only. The total number of answers posted for this question.
+        # Corresponds to the JSON property `totalAnswerCount`
+        # @return [Fixnum]
+        attr_accessor :total_answer_count
+      
+        # Output only. The timestamp for when the question was last modified.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        # Output only. The number of upvotes for the question.
+        # Corresponds to the JSON property `upvoteCount`
+        # @return [Fixnum]
+        attr_accessor :upvote_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @author = args[:author] if args.key?(:author)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @name = args[:name] if args.key?(:name)
+          @text = args[:text] if args.key?(:text)
+          @top_answers = args[:top_answers] if args.key?(:top_answers)
+          @total_answer_count = args[:total_answer_count] if args.key?(:total_answer_count)
+          @update_time = args[:update_time] if args.key?(:update_time)
+          @upvote_count = args[:upvote_count] if args.key?(:upvote_count)
+        end
+      end
+      
       # A region with its associated request count.
       class RegionCount
         include Google::Apis::Core::Hashable
@@ -3162,6 +3526,54 @@ module Google
         def update!(**args)
           @set_values = args[:set_values] if args.key?(:set_values)
           @unset_values = args[:unset_values] if args.key?(:unset_values)
+        end
+      end
+      
+      # Request message for reporting a GoogleLocation.
+      class ReportGoogleLocationRequest
+        include Google::Apis::Core::Hashable
+      
+        # Optional. The resource name of the location group that this Google Location
+        # is being reported for, in the format `accounts/`account_id``.
+        # Corresponds to the JSON property `locationGroupName`
+        # @return [String]
+        attr_accessor :location_group_name
+      
+        # The reason for which the user is reporting this location when the issue
+        # is with the location itself.
+        # Corresponds to the JSON property `reportReasonBadLocation`
+        # @return [String]
+        attr_accessor :report_reason_bad_location
+      
+        # The reason for which the user is reporting this location when the issue
+        # is with the recommendation. This report is useful if the location has
+        # been recommended to the GMB account.
+        # Corresponds to the JSON property `reportReasonBadRecommendation`
+        # @return [String]
+        attr_accessor :report_reason_bad_recommendation
+      
+        # Optional. A text entry for elaborating on the reason for which the user is
+        # reporting this location. The maximum length is 512 characters.
+        # Corresponds to the JSON property `reportReasonElaboration`
+        # @return [String]
+        attr_accessor :report_reason_elaboration
+      
+        # Optional. The BCP 47 code of language used in `report_reason_elaboration`.
+        # Corresponds to the JSON property `reportReasonLanguageCode`
+        # @return [String]
+        attr_accessor :report_reason_language_code
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @location_group_name = args[:location_group_name] if args.key?(:location_group_name)
+          @report_reason_bad_location = args[:report_reason_bad_location] if args.key?(:report_reason_bad_location)
+          @report_reason_bad_recommendation = args[:report_reason_bad_recommendation] if args.key?(:report_reason_bad_recommendation)
+          @report_reason_elaboration = args[:report_reason_elaboration] if args.key?(:report_reason_elaboration)
+          @report_reason_language_code = args[:report_reason_language_code] if args.key?(:report_reason_language_code)
         end
       end
       
@@ -3503,6 +3915,11 @@ module Google
         # @return [String]
         attr_accessor :section_id
       
+        # Optional. Type of the current price list section. Default value is FOOD.
+        # Corresponds to the JSON property `sectionType`
+        # @return [String]
+        attr_accessor :section_type
+      
         def initialize(**args)
            update!(**args)
         end
@@ -3512,6 +3929,7 @@ module Google
           @items = args[:items] if args.key?(:items)
           @labels = args[:labels] if args.key?(:labels)
           @section_id = args[:section_id] if args.key?(:section_id)
+          @section_type = args[:section_type] if args.key?(:section_type)
         end
       end
       
@@ -3551,21 +3969,19 @@ module Google
       # Represents a single time period when a location's operational hours differ
       # from its normal business hours.
       # A special hour period must represent a range of less than 24 hours.
-      # The `open_time` and `start_date` must predate the `close_time` and `end_date`.
-      # The `close_time` and `end_date` can extend to 11:59 a.m. on the day after
-      # the specified `start_date`.
-      # For example, the following inputs are valid:
+      # The `open_time` and `start_date` must predate the `close_time` and
+      # `end_date`. The `close_time` and `end_date` can extend to 11:59 a.m. on the
+      # day after the specified `start_date`. For example, the following inputs are
+      # valid:
       # start_date=2015-11-23, open_time=08:00, close_time=18:00
-      # start_date=2015-11-23, end_date=2015-11-23, open_time=08:00, close_time=18:
-      # 00
-      # start_date=2015-11-23, end_date=2015-11-24, open_time=13:00, close_time=11:
-      # 59
+      # start_date=2015-11-23, end_date=2015-11-23, open_time=08:00,
+      # close_time=18:00 start_date=2015-11-23, end_date=2015-11-24,
+      # open_time=13:00, close_time=11:59
       # The following inputs are not valid:
       # start_date=2015-11-23, open_time=13:00, close_time=11:59
-      # start_date=2015-11-23, end_date=2015-11-24, open_time=13:00, close_time=12:
-      # 00
-      # start_date=2015-11-23, end_date=2015-11-25, open_time=08:00, close_time=18:
-      # 00
+      # start_date=2015-11-23, end_date=2015-11-24, open_time=13:00,
+      # close_time=12:00 start_date=2015-11-23, end_date=2015-11-25,
+      # open_time=08:00, close_time=18:00
       class SpecialHourPeriod
         include Google::Apis::Core::Hashable
       
@@ -3577,13 +3993,14 @@ module Google
         # @return [String]
         attr_accessor :close_time
       
-        # Represents a whole calendar date, e.g. date of birth. The time of day and
-        # time zone are either specified elsewhere or are not significant. The date
-        # is relative to the Proleptic Gregorian Calendar. The day may be 0 to
-        # represent a year and month where the day is not significant, e.g. credit card
-        # expiration date. The year may be 0 to represent a month and day independent
-        # of year, e.g. anniversary date. Related types are google.type.TimeOfDay
-        # and `google.protobuf.Timestamp`.
+        # Represents a whole or partial calendar date, e.g. a birthday. The time of day
+        # and time zone are either specified elsewhere or are not significant. The date
+        # is relative to the Proleptic Gregorian Calendar. This can represent:
+        # * A full date, with non-zero year, month and day values
+        # * A month and day value, with a zero year, e.g. an anniversary
+        # * A year on its own, with zero month and day values
+        # * A year and month value, with a zero day, e.g. a credit card expiration date
+        # Related types are google.type.TimeOfDay and `google.protobuf.Timestamp`.
         # Corresponds to the JSON property `endDate`
         # @return [Google::Apis::MybusinessV4::Date]
         attr_accessor :end_date
@@ -3604,13 +4021,14 @@ module Google
         # @return [String]
         attr_accessor :open_time
       
-        # Represents a whole calendar date, e.g. date of birth. The time of day and
-        # time zone are either specified elsewhere or are not significant. The date
-        # is relative to the Proleptic Gregorian Calendar. The day may be 0 to
-        # represent a year and month where the day is not significant, e.g. credit card
-        # expiration date. The year may be 0 to represent a month and day independent
-        # of year, e.g. anniversary date. Related types are google.type.TimeOfDay
-        # and `google.protobuf.Timestamp`.
+        # Represents a whole or partial calendar date, e.g. a birthday. The time of day
+        # and time zone are either specified elsewhere or are not significant. The date
+        # is relative to the Proleptic Gregorian Calendar. This can represent:
+        # * A full date, with non-zero year, month and day values
+        # * A month and day value, with a zero year, e.g. an anniversary
+        # * A year on its own, with zero month and day values
+        # * A year and month value, with a zero day, e.g. a credit card expiration date
+        # Related types are google.type.TimeOfDay and `google.protobuf.Timestamp`.
         # Corresponds to the JSON property `startDate`
         # @return [Google::Apis::MybusinessV4::Date]
         attr_accessor :start_date
@@ -3649,7 +4067,7 @@ module Google
         end
       end
       
-      # Request message for MyBusiness.StartUploadMediaItemData.
+      # Request message for Media.StartUploadMediaItemData.
       class StartUploadMediaItemDataRequest
         include Google::Apis::Core::Hashable
       
@@ -3726,13 +4144,14 @@ module Google
       class TimeInterval
         include Google::Apis::Core::Hashable
       
-        # Represents a whole calendar date, e.g. date of birth. The time of day and
-        # time zone are either specified elsewhere or are not significant. The date
-        # is relative to the Proleptic Gregorian Calendar. The day may be 0 to
-        # represent a year and month where the day is not significant, e.g. credit card
-        # expiration date. The year may be 0 to represent a month and day independent
-        # of year, e.g. anniversary date. Related types are google.type.TimeOfDay
-        # and `google.protobuf.Timestamp`.
+        # Represents a whole or partial calendar date, e.g. a birthday. The time of day
+        # and time zone are either specified elsewhere or are not significant. The date
+        # is relative to the Proleptic Gregorian Calendar. This can represent:
+        # * A full date, with non-zero year, month and day values
+        # * A month and day value, with a zero year, e.g. an anniversary
+        # * A year on its own, with zero month and day values
+        # * A year and month value, with a zero day, e.g. a credit card expiration date
+        # Related types are google.type.TimeOfDay and `google.protobuf.Timestamp`.
         # Corresponds to the JSON property `endDate`
         # @return [Google::Apis::MybusinessV4::Date]
         attr_accessor :end_date
@@ -3744,13 +4163,14 @@ module Google
         # @return [Google::Apis::MybusinessV4::TimeOfDay]
         attr_accessor :end_time
       
-        # Represents a whole calendar date, e.g. date of birth. The time of day and
-        # time zone are either specified elsewhere or are not significant. The date
-        # is relative to the Proleptic Gregorian Calendar. The day may be 0 to
-        # represent a year and month where the day is not significant, e.g. credit card
-        # expiration date. The year may be 0 to represent a month and day independent
-        # of year, e.g. anniversary date. Related types are google.type.TimeOfDay
-        # and `google.protobuf.Timestamp`.
+        # Represents a whole or partial calendar date, e.g. a birthday. The time of day
+        # and time zone are either specified elsewhere or are not significant. The date
+        # is relative to the Proleptic Gregorian Calendar. This can represent:
+        # * A full date, with non-zero year, month and day values
+        # * A month and day value, with a zero year, e.g. an anniversary
+        # * A year on its own, with zero month and day values
+        # * A year and month value, with a zero day, e.g. a credit card expiration date
+        # Related types are google.type.TimeOfDay and `google.protobuf.Timestamp`.
         # Corresponds to the JSON property `startDate`
         # @return [Google::Apis::MybusinessV4::Date]
         attr_accessor :start_date
@@ -3831,8 +4251,8 @@ module Google
         attr_accessor :close_day
       
         # Time in 24hr ISO 8601 extended format (hh:mm). Valid values are
-        # 00:00-24:00, where 24:00 represents midnight at the end of the specified day
-        # field.
+        # 00:00-24:00, where 24:00 represents midnight at the end of the specified
+        # day field.
         # Corresponds to the JSON property `closeTime`
         # @return [String]
         attr_accessor :close_time
@@ -3843,8 +4263,9 @@ module Google
         # @return [String]
         attr_accessor :open_day
       
-        # Time in 24hr ISO 8601 extended format (hh:mm). Valid values are 00:00-24:00,
-        # where 24:00 represents midnight at the end of the specified day field.
+        # Time in 24hr ISO 8601 extended format (hh:mm). Valid values are
+        # 00:00-24:00, where 24:00 represents midnight at the end of the specified
+        # day field.
         # Corresponds to the JSON property `openTime`
         # @return [String]
         attr_accessor :open_time
@@ -3930,6 +4351,25 @@ module Google
         # Update properties of this object
         def update!(**args)
           @to_account = args[:to_account] if args.key?(:to_account)
+        end
+      end
+      
+      # Request message for QuestionsAndAnswers.UpsertAnswer
+      class UpsertAnswerRequest
+        include Google::Apis::Core::Hashable
+      
+        # Represents an answer to a question
+        # Corresponds to the JSON property `answer`
+        # @return [Google::Apis::MybusinessV4::Answer]
+        attr_accessor :answer
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @answer = args[:answer] if args.key?(:answer)
         end
       end
       

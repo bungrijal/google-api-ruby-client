@@ -64,6 +64,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Answer
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AssociateLocationRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -94,6 +100,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Author
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class BasicMetricsRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -107,6 +119,18 @@ module Google
       end
       
       class BatchGetLocationsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class BatchGetReviewsRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class BatchGetReviewsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -298,6 +322,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ListAnswersResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListAttributeMetadataResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -341,6 +371,18 @@ module Google
       end
       
       class ListMediaItemsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListQuestionsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListRecommendedGoogleLocationsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -413,6 +455,12 @@ module Google
       end
       
       class LocationMetrics
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class LocationReview
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -538,6 +586,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Question
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class RegionCount
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -551,6 +605,12 @@ module Google
       end
       
       class RepeatedEnumAttributeValue
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ReportGoogleLocationRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -694,6 +754,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class UpsertAnswerRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class UrlAttributeValue
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -787,6 +853,19 @@ module Google
         end
       end
       
+      class Answer
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :author, as: 'author', class: Google::Apis::MybusinessV4::Author, decorator: Google::Apis::MybusinessV4::Author::Representation
+      
+          property :create_time, as: 'createTime'
+          property :name, as: 'name'
+          property :text, as: 'text'
+          property :update_time, as: 'updateTime'
+          property :upvote_count, as: 'upvoteCount'
+        end
+      end
+      
       class AssociateLocationRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -839,6 +918,15 @@ module Google
         end
       end
       
+      class Author
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :display_name, as: 'displayName'
+          property :profile_photo_url, as: 'profilePhotoUrl'
+          property :type, as: 'type'
+        end
+      end
+      
       class BasicMetricsRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -861,6 +949,26 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :locations, as: 'locations', class: Google::Apis::MybusinessV4::Location, decorator: Google::Apis::MybusinessV4::Location::Representation
       
+        end
+      end
+      
+      class BatchGetReviewsRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :ignore_rating_only_reviews, as: 'ignoreRatingOnlyReviews'
+          collection :location_names, as: 'locationNames'
+          property :order_by, as: 'orderBy'
+          property :page_size, as: 'pageSize'
+          property :page_token, as: 'pageToken'
+        end
+      end
+      
+      class BatchGetReviewsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :location_reviews, as: 'locationReviews', class: Google::Apis::MybusinessV4::LocationReview, decorator: Google::Apis::MybusinessV4::LocationReview::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
         end
       end
       
@@ -1123,6 +1231,16 @@ module Google
         end
       end
       
+      class ListAnswersResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :answers, as: 'answers', class: Google::Apis::MybusinessV4::Answer, decorator: Google::Apis::MybusinessV4::Answer::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+          property :total_size, as: 'totalSize'
+        end
+      end
+      
       class ListAttributeMetadataResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1194,6 +1312,26 @@ module Google
       
           property :next_page_token, as: 'nextPageToken'
           property :total_media_item_count, as: 'totalMediaItemCount'
+        end
+      end
+      
+      class ListQuestionsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :questions, as: 'questions', class: Google::Apis::MybusinessV4::Question, decorator: Google::Apis::MybusinessV4::Question::Representation
+      
+          property :total_size, as: 'totalSize'
+        end
+      end
+      
+      class ListRecommendedGoogleLocationsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :google_locations, as: 'googleLocations', class: Google::Apis::MybusinessV4::GoogleLocation, decorator: Google::Apis::MybusinessV4::GoogleLocation::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+          property :total_size, as: 'totalSize'
         end
       end
       
@@ -1363,6 +1501,15 @@ module Google
         end
       end
       
+      class LocationReview
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :name, as: 'name'
+          property :review, as: 'review', class: Google::Apis::MybusinessV4::Review, decorator: Google::Apis::MybusinessV4::Review::Representation
+      
+        end
+      end
+      
       class LocationState
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1406,6 +1553,7 @@ module Google
           property :create_time, as: 'createTime'
           property :data_ref, as: 'dataRef', class: Google::Apis::MybusinessV4::MediaItemDataRef, decorator: Google::Apis::MybusinessV4::MediaItemDataRef::Representation
       
+          property :description, as: 'description'
           property :dimensions, as: 'dimensions', class: Google::Apis::MybusinessV4::Dimensions, decorator: Google::Apis::MybusinessV4::Dimensions::Representation
       
           property :google_url, as: 'googleUrl'
@@ -1569,6 +1717,22 @@ module Google
         end
       end
       
+      class Question
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :author, as: 'author', class: Google::Apis::MybusinessV4::Author, decorator: Google::Apis::MybusinessV4::Author::Representation
+      
+          property :create_time, as: 'createTime'
+          property :name, as: 'name'
+          property :text, as: 'text'
+          collection :top_answers, as: 'topAnswers', class: Google::Apis::MybusinessV4::Answer, decorator: Google::Apis::MybusinessV4::Answer::Representation
+      
+          property :total_answer_count, as: 'totalAnswerCount'
+          property :update_time, as: 'updateTime'
+          property :upvote_count, as: 'upvoteCount'
+        end
+      end
+      
       class RegionCount
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1591,6 +1755,17 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :set_values, as: 'setValues'
           collection :unset_values, as: 'unsetValues'
+        end
+      end
+      
+      class ReportGoogleLocationRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :location_group_name, as: 'locationGroupName'
+          property :report_reason_bad_location, as: 'reportReasonBadLocation'
+          property :report_reason_bad_recommendation, as: 'reportReasonBadRecommendation'
+          property :report_reason_elaboration, as: 'reportReasonElaboration'
+          property :report_reason_language_code, as: 'reportReasonLanguageCode'
         end
       end
       
@@ -1701,6 +1876,7 @@ module Google
           collection :labels, as: 'labels', class: Google::Apis::MybusinessV4::Label, decorator: Google::Apis::MybusinessV4::Label::Representation
       
           property :section_id, as: 'sectionId'
+          property :section_type, as: 'sectionType'
         end
       end
       
@@ -1816,6 +1992,14 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :to_account, as: 'toAccount'
+        end
+      end
+      
+      class UpsertAnswerRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :answer, as: 'answer', class: Google::Apis::MybusinessV4::Answer, decorator: Google::Apis::MybusinessV4::Answer::Representation
+      
         end
       end
       
