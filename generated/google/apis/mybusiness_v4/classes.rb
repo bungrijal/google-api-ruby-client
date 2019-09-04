@@ -632,8 +632,13 @@ module Google
         # @return [Array<String>]
         attr_accessor :location_names
       
-        # Optional. Specifies the field to sort reviews by. Valid order to sort by
-        # are "rating" and "update_time". Results will always be in descending order.
+        # Optional.
+        # Specifies the field to sort reviews by.
+        # If unspecified, the order of reviews returned will
+        # default to `update_time desc`.
+        # Valid orders to sort by are `rating`, `rating desc` and `update_time desc`.
+        # `rating` will return reviews in ascending order.
+        # `update_time`(i.e. ascending order) is not supported.
         # Corresponds to the JSON property `orderBy`
         # @return [String]
         attr_accessor :order_by
@@ -1151,6 +1156,11 @@ module Google
       class FetchVerificationOptionsRequest
         include Google::Apis::Core::Hashable
       
+        # Additional data for service business verification.
+        # Corresponds to the JSON property `context`
+        # @return [Google::Apis::MybusinessV4::ServiceBusinessContext]
+        attr_accessor :context
+      
         # The BCP 47 language code representing the language that is to be used for
         # the verification process. Available options vary by language.
         # Corresponds to the JSON property `languageCode`
@@ -1163,6 +1173,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @context = args[:context] if args.key?(:context)
           @language_code = args[:language_code] if args.key?(:language_code)
         end
       end
@@ -1195,17 +1206,14 @@ module Google
         # @return [String]
         attr_accessor :language_code
       
-        # Indicates the duration of acceptable cache-age. If omitted, will always
-        # return the cached data (if available). If the cache is older than the
-        # provided duration, or if a cached value is not available, results will be
-        # re-calculated and re-cached.
+        # Deprecated. This field is ignored for all requests.
         # Corresponds to the JSON property `maxCacheDuration`
         # @return [String]
         attr_accessor :max_cache_duration
       
         # The number of matches to return. The default value is 3, with a maximum
         # of 10. Note that latency may increase if more are requested. There is no
-        # pagination. This field is only respected if the cache needs to be updated.
+        # pagination.
         # Corresponds to the JSON property `numResults`
         # @return [Fixnum]
         attr_accessor :num_results
@@ -1246,6 +1254,32 @@ module Google
         def update!(**args)
           @match_time = args[:match_time] if args.key?(:match_time)
           @matched_locations = args[:matched_locations] if args.key?(:matched_locations)
+        end
+      end
+      
+      # Follower metadata for a location.
+      class FollowersMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Total number of followers for the location.
+        # Corresponds to the JSON property `count`
+        # @return [Fixnum]
+        attr_accessor :count
+      
+        # The resource name for this.
+        # accounts/`account_id`/locations/`location_id`/followers/metadata
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @count = args[:count] if args.key?(:count)
+          @name = args[:name] if args.key?(:name)
         end
       end
       
@@ -2382,7 +2416,8 @@ module Google
         # @return [String]
         attr_accessor :location_name
       
-        # Time zone (IANA timezone IDs, for example, 'Europe/London') of the location.
+        # Time zone (IANA timezone IDs, for example, 'Europe/London') of the
+        # location.
         # Corresponds to the JSON property `timeZone`
         # @return [String]
         attr_accessor :time_zone
@@ -2528,6 +2563,13 @@ module Google
         attr_accessor :can_update
         alias_method :can_update?, :can_update
       
+        # Output only. Indicates whether any of this Location's properties are in the
+        # edit pending state.
+        # Corresponds to the JSON property `hasPendingEdits`
+        # @return [Boolean]
+        attr_accessor :has_pending_edits
+        alias_method :has_pending_edits?, :has_pending_edits
+      
         # Output only. Indicates whether the location has pending verification
         # requests.
         # Corresponds to the JSON property `hasPendingVerification`
@@ -2614,6 +2656,7 @@ module Google
         def update!(**args)
           @can_delete = args[:can_delete] if args.key?(:can_delete)
           @can_update = args[:can_update] if args.key?(:can_update)
+          @has_pending_edits = args[:has_pending_edits] if args.key?(:has_pending_edits)
           @has_pending_verification = args[:has_pending_verification] if args.key?(:has_pending_verification)
           @is_disabled = args[:is_disabled] if args.key?(:is_disabled)
           @is_disconnected = args[:is_disconnected] if args.key?(:is_disconnected)
@@ -3966,6 +4009,38 @@ module Google
         end
       end
       
+      # Additional data for service business verification.
+      class ServiceBusinessContext
+        include Google::Apis::Core::Hashable
+      
+        # Represents a postal address, e.g. for postal delivery or payments addresses.
+        # Given a postal address, a postal service can deliver items to a premise, P.O.
+        # Box or similar.
+        # It is not intended to model geographical locations (roads, towns,
+        # mountains).
+        # In typical usage an address would be created via user input or from importing
+        # existing data, depending on the type of process.
+        # Advice on address input / editing:
+        # - Use an i18n-ready address widget such as
+        # https://github.com/googlei18n/libaddressinput)
+        # - Users should not be presented with UI elements for input or editing of
+        # fields outside countries where that field is used.
+        # For more guidance on how to use this schema, please see:
+        # https://support.google.com/business/answer/6397478
+        # Corresponds to the JSON property `address`
+        # @return [Google::Apis::MybusinessV4::PostalAddress]
+        attr_accessor :address
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @address = args[:address] if args.key?(:address)
+        end
+      end
+      
       # Represents a single time period when a location's operational hours differ
       # from its normal business hours.
       # A special hour period must represent a range of less than 24 hours.
@@ -4477,6 +4552,11 @@ module Google
         # @return [Google::Apis::MybusinessV4::AddressInput]
         attr_accessor :address_input
       
+        # Additional data for service business verification.
+        # Corresponds to the JSON property `context`
+        # @return [Google::Apis::MybusinessV4::ServiceBusinessContext]
+        attr_accessor :context
+      
         # Input for EMAIL verification.
         # Corresponds to the JSON property `emailInput`
         # @return [Google::Apis::MybusinessV4::EmailInput]
@@ -4505,6 +4585,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @address_input = args[:address_input] if args.key?(:address_input)
+          @context = args[:context] if args.key?(:context)
           @email_input = args[:email_input] if args.key?(:email_input)
           @language_code = args[:language_code] if args.key?(:language_code)
           @method_prop = args[:method_prop] if args.key?(:method_prop)

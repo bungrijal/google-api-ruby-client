@@ -48,6 +48,48 @@ module Google
           @batch_path = 'batch'
         end
         
+        # Creates an account with the specified name and type under the given parent.
+        # <ul>
+        # <li> Personal accounts and Organizations cannot be created. </li>
+        # <li> User Groups cannot be created with a Personal account as primary
+        # owner. </li>
+        # <li> Location Groups cannot be created with a primary owner of a
+        # Personal account if the Personal account is in an Organization. </li>
+        # <li> Location Groups cannot own Location Groups. </li>
+        # </ul>
+        # @param [Google::Apis::MybusinessV4::Account] account_object
+        # @param [String] primary_owner
+        #   The resource name of the account which will be the primary owner of the
+        #   account being created. It should be of the form `accounts/`account_id`/`.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::MybusinessV4::Account] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::MybusinessV4::Account]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_account(account_object = nil, primary_owner: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command =  make_simple_command(:post, 'v4/accounts', options)
+          command.request_representation = Google::Apis::MybusinessV4::Account::Representation
+          command.request_object = account_object
+          command.response_representation = Google::Apis::MybusinessV4::Account::Representation
+          command.response_class = Google::Apis::MybusinessV4::Account
+          command.query['primaryOwner'] = primary_owner unless primary_owner.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Clears the pubsub notification settings for the account.
         # @param [String] name
         #   The resource name for the notification settings to be cleared.
@@ -1003,6 +1045,8 @@ module Google
         #   The IDs of the attributes to update. Only attributes noted in the mask will
         #   be updated. If an attribute is present in the mask and not in the location,
         #   it will be removed. An empty mask will update all attributes.
+        #   Whenever this field is set, the update_mask should include attributes as
+        #   one of the fields to update.
         # @param [String] update_mask
         #   The specific fields to update. If no mask is specified, then this is
         #   treated as a full update and all fields are set to the values passed
@@ -1270,6 +1314,40 @@ module Google
           command.request_object = admin_object
           command.response_representation = Google::Apis::MybusinessV4::Admin::Representation
           command.response_class = Google::Apis::MybusinessV4::Admin
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Get the followers settings for a location.
+        # NOT_FOUND is returned if either the account or the location doesn't exist.
+        # PRECONDITION_FAILED is returned if the location is not verified nor
+        # connected to Maps.
+        # @param [String] name
+        #   The resource name of the location's followers metadata.
+        #   accounts/`account_id`/locations/`location_id`/followers/metadata
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::MybusinessV4::FollowersMetadata] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::MybusinessV4::FollowersMetadata]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_account_location_follower_metadata(name, fields: nil, quota_user: nil, options: nil, &block)
+          command =  make_simple_command(:get, 'v4/{+name}', options)
+          command.response_representation = Google::Apis::MybusinessV4::FollowersMetadata::Representation
+          command.response_class = Google::Apis::MybusinessV4::FollowersMetadata
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
@@ -2080,9 +2158,9 @@ module Google
         # @param [String] order_by
         #   Specifies the field to sort reviews by.
         #   If unspecified, the order of reviews returned will
-        #   default to `update_timedesc`.
-        #   Valid orders to sort by are `rating`, `ratingdesc` and
-        #   `update_timedesc`.
+        #   default to `update_time desc`.
+        #   Valid orders to sort by are `rating`, `rating desc` and
+        #   `update_time desc`.
         # @param [Fixnum] page_size
         #   How many reviews to fetch per page. The maximum `page_size` is
         #   200.

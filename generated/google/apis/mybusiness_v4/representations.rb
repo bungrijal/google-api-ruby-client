@@ -268,6 +268,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class FollowersMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GenerateAccountNumberRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -683,6 +689,12 @@ module Google
       end
       
       class ServiceAreaBusiness
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ServiceBusinessContext
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -1119,6 +1131,8 @@ module Google
       class FetchVerificationOptionsRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :context, as: 'context', class: Google::Apis::MybusinessV4::ServiceBusinessContext, decorator: Google::Apis::MybusinessV4::ServiceBusinessContext::Representation
+      
           property :language_code, as: 'languageCode'
         end
       end
@@ -1146,6 +1160,14 @@ module Google
           property :match_time, as: 'matchTime'
           collection :matched_locations, as: 'matchedLocations', class: Google::Apis::MybusinessV4::MatchedLocation, decorator: Google::Apis::MybusinessV4::MatchedLocation::Representation
       
+        end
+      end
+      
+      class FollowersMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :count, :numeric_string => true, as: 'count'
+          property :name, as: 'name'
         end
       end
       
@@ -1515,6 +1537,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :can_delete, as: 'canDelete'
           property :can_update, as: 'canUpdate'
+          property :has_pending_edits, as: 'hasPendingEdits'
           property :has_pending_verification, as: 'hasPendingVerification'
           property :is_disabled, as: 'isDisabled'
           property :is_disconnected, as: 'isDisconnected'
@@ -1891,6 +1914,14 @@ module Google
         end
       end
       
+      class ServiceBusinessContext
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :address, as: 'address', class: Google::Apis::MybusinessV4::PostalAddress, decorator: Google::Apis::MybusinessV4::PostalAddress::Representation
+      
+        end
+      end
+      
       class SpecialHourPeriod
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2037,6 +2068,8 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :address_input, as: 'addressInput', class: Google::Apis::MybusinessV4::AddressInput, decorator: Google::Apis::MybusinessV4::AddressInput::Representation
+      
+          property :context, as: 'context', class: Google::Apis::MybusinessV4::ServiceBusinessContext, decorator: Google::Apis::MybusinessV4::ServiceBusinessContext::Representation
       
           property :email_input, as: 'emailInput', class: Google::Apis::MybusinessV4::EmailInput, decorator: Google::Apis::MybusinessV4::EmailInput::Representation
       
